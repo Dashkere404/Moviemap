@@ -1,7 +1,7 @@
 // src/components/FilterModal.jsx
 
 import { useEffect } from 'react';
-import { logEvent } from '../../logger'; // ✅ Подключаем наш логгер
+import { logEvent } from '../logger'; // ✅ Подключаем наш логгер
 import styles from './FilterModal.module.css';
 
 export default function FilterModal({ isOpen, onClose, title, children, onApply, onReset }) {
