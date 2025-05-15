@@ -306,7 +306,7 @@ export default function Main() {
     logEvent('filter_selected', {
       filterType: 'rating',
       value: rating,
-      action: tempSelectedRatings.includes(ratings) ? 'removed' : 'added'
+      action: tempSelectedRatings.includes(rating) ? 'removed' : 'added'
     });
   };
 
