@@ -246,19 +246,20 @@ export default function Main() {
   };
 
   const handleUserIdChange = (e) => {
+    const newId = e.target.value;
+    setUserIdInput(newId);
     logEvent('user_id_input', {
       value: newId,
       inputType: 'user_search',
       timestamp: new Date().toISOString()
     });
-    setUserIdInput(e.target.value);
   };    
   
   const handleUserIdSearch = async (e) => {
     if (e.key === 'Enter') {
       try {
-        
-        setUserTitle(`Рекомендации для пользователя ${userIdInput}`);
+        const userId = userIdInput.trim();
+        setUserTitle(`Рекомендации для пользователя ${userId}`);
         logEvent('user_id_search_started', {
           userId,
           timestamp: new Date().toISOString()
