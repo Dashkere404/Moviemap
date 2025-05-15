@@ -246,6 +246,11 @@ export default function Main() {
   };
 
   const handleUserIdChange = (e) => {
+    logEvent('user_id_input', {
+      value: newId,
+      inputType: 'user_search',
+      timestamp: new Date().toISOString()
+    });
     setUserIdInput(e.target.value);
   };    
   
@@ -254,6 +259,10 @@ export default function Main() {
       try {
         
         setUserTitle(`Рекомендации для пользователя ${userIdInput}`);
+        logEvent('user_id_search_started', {
+          userId,
+          timestamp: new Date().toISOString()
+        });
         const mockMovies = Array(50).fill().map((_, index) => ({
           id: index + 100,
           title: `${activeTab === 'personal' ? 'Рекомендуемый' : 'Популярный'} фильм ${index + 1}`,
@@ -264,7 +273,11 @@ export default function Main() {
         }));
         
         setMovies(mockMovies);
-        
+        logEvent('user_id_search_complete', {
+          userId,
+          resultsCount: mockMovies.length,
+          tab: activeTab
+        });
         setSearchInputDisabled(false);
         setFiltersDisabled(false);
         
@@ -275,12 +288,30 @@ export default function Main() {
           document.body.style.overflow = 'auto';
         }, 100);
       } catch (error) {
+        logEvent('user_id_search_error', {
+          error: error.message,
+          userId: userIdInput
+        });
         console.error('Error fetching recommendations:', error);
       }
     }
   };
 
   const handleMovieClick = (movieId) => {
+    logEvent('movie_clicked', {
+      movieId,
+      fromMainPage: true,
+      searchQuery,
+      userId: userIdInput,
+      activeTab,
+      genreFilterActive,
+      ratingFilterActive,
+      yearFilterActive,
+      selectedGenres,
+      selectedRatings,
+      yearRange,
+      timestamp: new Date().toISOString()
+    });
     navigate(`/movie/${movieId}`, { 
       state: { 
         fromMain: true,
@@ -365,6 +396,9 @@ export default function Main() {
   };
 
   const resetGenreFilter = () => {
+    logEvent('filter_reseted', {
+      filterType: 'genre',
+    });
     setTempSelectedGenres([]);
     setSelectedGenres([]);
     setGenreFilterActive(false);
@@ -388,6 +422,9 @@ export default function Main() {
   };
 
   const resetRatingFilter = () => {
+    logEvent('filter_reseted', {
+      filterType: 'rating',
+    });
     setTempSelectedRatings([]);
     setTempBestFirst(true);
     setSelectedRatings([]);
@@ -410,6 +447,9 @@ export default function Main() {
   };
 
   const resetYearFilter = () => {
+    logEvent('filter_reseted', {
+      filterType: 'year',
+    });
     const defaultYearRange = { minYear: 1874, maxYear: 2016 };
     setTempYearRange(defaultYearRange);
     setYearRange(defaultYearRange);

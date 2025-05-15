@@ -44,7 +44,6 @@ export default function FilterModal({ isOpen, onClose, title, children, onApply,
 
   // Обработчики для кнопок
   const handleReset = () => {
-    logEvent('filter_reset', { modalTitle: title });
     onReset();
   };
 
