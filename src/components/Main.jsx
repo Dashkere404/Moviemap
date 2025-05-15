@@ -293,7 +293,6 @@ export default function Main() {
   const handleMovieClick = (movieId) => {
     logEvent('movie_clicked', {
       movieId,
-      fromMainPage: true,
       searchQuery,
       userId: userIdInput,
       activeTab,
