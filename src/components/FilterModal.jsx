@@ -48,7 +48,9 @@ export default function FilterModal({ isOpen, onClose, title, children, onApply,
     onReset();
   };
 
-  
+  const handleApply = () => {
+    onApply();
+  };
 
   const handleClose = () => {
     logEvent('modal_closed_by_button', { modalTitle: title });
