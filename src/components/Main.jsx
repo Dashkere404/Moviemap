@@ -174,11 +174,22 @@ export default function Main() {
   };
 
   const handleTabChange = (tab) => {
+    logEvent('tab_selected', {
+      tabName: tab,
+      tabType: tab === 'popular' ? 'popular' : 'personal',
+      timestamp: new Date().toISOString()
+    });
     setActiveTab(tab);
   };
 
   const handleSearch = (e) => {
     if (e.key === 'Enter') {
+      const query = searchQuery.trim();
+    
+      // Логируем событие поиска
+      logEvent('search_performed', {
+        query: query || '(empty)'
+      });
       const movieTitles = [
         "Приключения в космосе",
         "Тайна старого замка",
@@ -224,6 +235,11 @@ export default function Main() {
 
   const handleClearSearch = () => {
     setSearchQuery('');
+    // Логируем очистку поиска
+    logEvent('search_cleared', {
+      previousQuery: searchQuery,
+      timestamp: new Date().toISOString()
+    });
     setSearchInputDisabled(false);
     setFiltersDisabled(false);
     setShowMovies(false);
