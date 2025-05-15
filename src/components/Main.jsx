@@ -364,6 +364,7 @@ export default function Main() {
       logEvent('filter_applied', {
         filterType: 'rating',
         selected: tempSelectedRatings,
+        sortMode: tempBestFirst ? 'best_first' : 'worst_first',
       });
     } else {
       setShowRatingModal(false);
