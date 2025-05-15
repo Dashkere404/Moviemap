@@ -190,7 +190,7 @@ export default function Main() {
     
       // Логируем событие поиска
       logEvent('search_performed', {
-        query: movie_name || '(empty)'
+        query: query || '(empty)'
       });
       const movieTitles = [
         "Приключения в космосе",
