@@ -154,9 +154,7 @@ export default function Main() {
   }, [location, movieId]);
 
   const fetchSimilarMovies = async (id) => {
-    logEvent('similar_movies', {
-      value: id
-    });
+
     const mockMovies = Array(50).fill().map((_, index) => ({
       id: index + 200,
       title: `Похожий фильм ${index + 1}`,
@@ -167,6 +165,10 @@ export default function Main() {
     }));
     
     setMovies(mockMovies);
+    logEvent('similar_movies', {
+      value: id,
+      resultsCount: mockMovies.length,
+    });
     setShowMovies(true);
   };
 
@@ -189,9 +191,6 @@ export default function Main() {
       const query = searchQuery.trim();
     
       // Логируем событие поиска
-      logEvent('search_performed', {
-        query: query || '(empty)'
-      });
       const movieTitles = [
         "Приключения в космосе",
         "Тайна старого замка",
@@ -215,7 +214,10 @@ export default function Main() {
       }));
       
       setMovies(mockMovies);
-      
+      logEvent('search_performed', {
+        query: query || '(empty)',
+        resultsCount: mockMovies.length,
+      });
       if (searchQuery.trim() !== '') {
         setSearchInputDisabled(true);
         setFiltersDisabled(true);
