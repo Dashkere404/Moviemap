@@ -318,9 +318,15 @@ export default function Main() {
       setSelectedGenres(tempSelectedGenres);
       setGenreFilterActive(true);
       setShowGenreModal(false);
+      logEvent('filter_applied', {
+        filterType: 'genre',
+        selected: tempSelectedGenres,
+        count: tempSelectedGenres.length
+      });
     } else {
       setShowGenreModal(false);
     }
+    
   };
 
   const resetGenreFilter = () => {
