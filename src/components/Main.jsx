@@ -292,6 +292,11 @@ export default function Main() {
         ? prev.filter(g => g !== genre) 
         : [...prev, genre]
     );
+    logEvent('filter_selected', {
+      filterType: 'genre',
+      value: genre,
+      action: tempSelectedGenres.includes(genre) ? 'removed' : 'added'
+    });
   };
 
   const toggleRatingSelection = (rating) => {
