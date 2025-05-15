@@ -6,28 +6,34 @@ import { logEvent } from '../logger';
 
 export default function FilterModal({ isOpen, onClose, title, children, onApply, onReset }) {
   const modalRef = useRef(null);
-
+  const [wasEverOpen, setWasEverOpen] = useState(false);
   // Логируем открытие/закрытие
   useEffect(() => {
     if (isOpen) {
+      // Модалка открывается
       logEvent('modal_opened', { modalTitle: title });
+      setWasEverOpen(true); // Отмечаем, что модалка уже открывалась
       document.body.style.overflow = 'hidden';
     } else {
-      logEvent('modal_closed', { modalTitle: title });
+      // Логируем закрытие только если она уже была открыта
+      if (wasEverOpen) {
+        logEvent('modal_closed', { modalTitle: title });
+        setWasEverOpen(false);
+      }
       document.body.style.overflow = 'auto';
     }
-
+  
     const handleClickOutside = (event) => {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
         logEvent('modal_closed_by_click_outside', { modalTitle: title });
         onClose();
       }
     };
-
+  
     if (isOpen) {
       document.addEventListener('mousedown', handleClickOutside);
     }
-
+  
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
       document.body.style.overflow = 'auto';
