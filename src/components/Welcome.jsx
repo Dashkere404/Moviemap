@@ -5,10 +5,8 @@ import styles from './Welcome.module.css';
 import { logEvent } from '../logger'; 
 export default function Welcome() {
   const navigate = useNavigate();
-  useEffect(() => {
-    logEvent('page_view', { page: '/welcome' });
-  }, []);
   
+
   const handleClick = () => {
     
     logEvent('button_click', {
