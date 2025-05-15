@@ -314,7 +314,7 @@ export default function Main() {
     setTempBestFirst(prev => !prev);
     logEvent('filter_selected', {
       filterType: 'sort',
-      value: newValue ? 'best_first' : 'worst_first'
+      value: prev ? 'best_first' : 'worst_first'
     });
   };
 
