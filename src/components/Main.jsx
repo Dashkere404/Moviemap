@@ -303,6 +303,11 @@ export default function Main() {
     setTempSelectedRatings(prev => 
       prev.includes(rating) ? [] : [rating]
     );
+    logEvent('filter_selected', {
+      filterType: 'rating',
+      value: rating,
+      action: tempSelectedRatings.includes(ratings) ? 'removed' : 'added'
+    });
   };
 
   const toggleBestFirst = () => {
@@ -311,6 +316,11 @@ export default function Main() {
 
   const handleYearChange = (range) => {
     setTempYearRange(range);
+    logEvent('filter_selected', {
+      filterType: 'year',
+      value: range,
+      action: 'changed'
+    });
   };
 
   const applyGenreFilter = () => {
@@ -326,7 +336,6 @@ export default function Main() {
     } else {
       setShowGenreModal(false);
     }
-    
   };
 
   const resetGenreFilter = () => {
@@ -342,6 +351,11 @@ export default function Main() {
       setBestFirst(tempBestFirst);
       setRatingFilterActive(true);
       setShowRatingModal(false);
+      logEvent('filter_applied', {
+        filterType: 'rating',
+        selected: tempSelectedRatings,
+        count: tempSelectedRatings.length
+      });
     } else {
       setShowRatingModal(false);
     }
@@ -360,6 +374,11 @@ export default function Main() {
     if (tempYearRange.minYear !== yearRange.minYear || tempYearRange.maxYear !== yearRange.maxYear) {
       setYearRange(tempYearRange);
       setYearFilterActive(true);
+      logEvent('filter_applied', {
+        filterType: 'year',
+        selected: tempYearRange,
+        count: tempYearRange.length
+      });
     }
     setShowYearModal(false);
   };
