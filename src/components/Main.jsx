@@ -312,6 +312,10 @@ export default function Main() {
 
   const toggleBestFirst = () => {
     setTempBestFirst(prev => !prev);
+    logEvent('filter_selected', {
+      filterType: 'sort',
+      value: newValue ? 'best_first' : 'worst_first'
+    });
   };
 
   const handleYearChange = (range) => {
@@ -354,7 +358,6 @@ export default function Main() {
       logEvent('filter_applied', {
         filterType: 'rating',
         selected: tempSelectedRatings,
-        count: tempSelectedRatings.length
       });
     } else {
       setShowRatingModal(false);
