@@ -10,8 +10,10 @@ export default function FilterModal({ isOpen, onClose, title, children, onApply,
   // Логируем открытие/закрытие
   useEffect(() => {
     if (isOpen) {
-      // Модалка открывается
-      logEvent('modal_opened', { modalTitle: title });
+      if (wasEverOpen==false){
+        // Модалка открывается
+        logEvent('modal_opened', { modalTitle: title });
+      }
       setWasEverOpen(true); // Отмечаем, что модалка уже открывалась
       document.body.style.overflow = 'hidden';
     } else {
