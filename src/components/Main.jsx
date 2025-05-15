@@ -190,7 +190,7 @@ export default function Main() {
     
       // Логируем событие поиска
       logEvent('search_performed', {
-        query: query || '(empty)'
+        query: movie_name || '(empty)'
       });
       const movieTitles = [
         "Приключения в космосе",
@@ -239,7 +239,7 @@ export default function Main() {
     setSearchQuery('');
     // Логируем очистку поиска
     logEvent('search_cleared', {
-      previousQuery: searchQuery,
+      previousName: searchQuery,
     });
     setSearchInputDisabled(false);
     setFiltersDisabled(false);
@@ -249,10 +249,6 @@ export default function Main() {
   const handleUserIdChange = (e) => {
     const newId = e.target.value;
     setUserIdInput(newId);
-    logEvent('user_id_input', {
-      value: newId,
-      inputType: 'user_search',
-    });
   };    
   
   const handleUserIdSearch = async (e) => {
@@ -260,9 +256,7 @@ export default function Main() {
       try {
         const userId = userIdInput.trim();
         setUserTitle(`Рекомендации для пользователя ${userId}`);
-        logEvent('user_id_search_started', {
-          userId,
-        });
+
         const mockMovies = Array(50).fill().map((_, index) => ({
           id: index + 100,
           title: `${activeTab === 'personal' ? 'Рекомендуемый' : 'Популярный'} фильм ${index + 1}`,
@@ -273,10 +267,9 @@ export default function Main() {
         }));
         
         setMovies(mockMovies);
-        logEvent('user_id_search_complete', {
-          userId,
+        logEvent('user_performed', {
+          value: userId,
           resultsCount: mockMovies.length,
-          tab: activeTab
         });
         setSearchInputDisabled(false);
         setFiltersDisabled(false);
