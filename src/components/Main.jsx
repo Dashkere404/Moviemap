@@ -154,6 +154,9 @@ export default function Main() {
   }, [location, movieId]);
 
   const fetchSimilarMovies = async (id) => {
+    logEvent('similar_movies', {
+      value: id
+    });
     const mockMovies = Array(50).fill().map((_, index) => ({
       id: index + 200,
       title: `Похожий фильм ${index + 1}`,
@@ -177,7 +180,6 @@ export default function Main() {
     logEvent('tab_selected', {
       tabName: tab,
       tabType: tab === 'popular' ? 'popular' : 'personal',
-      timestamp: new Date().toISOString()
     });
     setActiveTab(tab);
   };
@@ -238,7 +240,6 @@ export default function Main() {
     // Логируем очистку поиска
     logEvent('search_cleared', {
       previousQuery: searchQuery,
-      timestamp: new Date().toISOString()
     });
     setSearchInputDisabled(false);
     setFiltersDisabled(false);
@@ -251,7 +252,6 @@ export default function Main() {
     logEvent('user_id_input', {
       value: newId,
       inputType: 'user_search',
-      timestamp: new Date().toISOString()
     });
   };    
   
@@ -262,7 +262,6 @@ export default function Main() {
         setUserTitle(`Рекомендации для пользователя ${userId}`);
         logEvent('user_id_search_started', {
           userId,
-          timestamp: new Date().toISOString()
         });
         const mockMovies = Array(50).fill().map((_, index) => ({
           id: index + 100,
@@ -311,7 +310,6 @@ export default function Main() {
       selectedGenres,
       selectedRatings,
       yearRange,
-      timestamp: new Date().toISOString()
     });
     navigate(`/movie/${movieId}`, { 
       state: { 
