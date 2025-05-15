@@ -2,11 +2,19 @@ import { useNavigate } from 'react-router-dom';
 import map from '../assets/map.svg';
 import mappin from '../assets/mappin.svg';
 import styles from './Welcome.module.css';
-
+import { logEvent } from '../logger'; 
 export default function Welcome() {
   const navigate = useNavigate();
-
+  useEffect(() => {
+    logEvent('page_view', { page: '/welcome' });
+  }, []);
+  
   const handleClick = () => {
+    
+    logEvent('button_click', {
+      buttonId: 'pick_movie_button',
+      page: '/welcome'
+    });
     navigate('/main');
   };
 
