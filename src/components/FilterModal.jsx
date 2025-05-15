@@ -13,8 +13,10 @@ export default function FilterModal({ isOpen, onClose, title, children, onApply,
       logEvent('modal_opened', { modalTitle: title });
       document.body.style.overflow = 'hidden';
     } else {
-      logEvent('modal_closed', { modalTitle: title });
-      document.body.style.overflow = 'auto';
+        if (isFilterOpen(title)) {
+          logEvent('modal_closed', { modalTitle: title });
+          document.body.style.overflow = 'auto';
+        }
     }
 
     const handleClickOutside = (event) => {
