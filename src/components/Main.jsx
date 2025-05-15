@@ -311,10 +311,16 @@ export default function Main() {
   };
 
   const toggleBestFirst = () => {
-    setTempBestFirst(prev => !prev);
-    logEvent('filter_selected', {
-      filterType: 'sort',
-      value: prev ? 'best_first' : 'worst_first'
+    setTempBestFirst(prev => {
+      const newValue = !prev;
+      
+      // Логируем до применения фильтра
+      logEvent('filter_selected', {
+        filterType: 'sort',
+        value: newValue ? 'best_first' : 'worst_first'
+      });
+  
+      return newValue;
     });
   };
 
