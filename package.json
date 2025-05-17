@@ -6,6 +6,7 @@
   "author": "dashkere <sabarkina@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "dompurify": "^3.2.5"
+    "dompurify": "^3.2.5",
+    "vite": "^6.3.5"
   }
 }
