@@ -11,7 +11,7 @@ import tape from '../assets/tape.png';
 import { theme } from '../styles/theme';
 import FilterModal from './FilterModal';
 import YearSlider from './YearSlider';
-
+import DOMPurify from 'dompurify';
 import poster1 from '../assets/poster1.jpg';
 import poster2 from '../assets/poster2.jpg';
 import poster3 from '../assets/poster3.jpg';
@@ -257,7 +257,8 @@ export default function Main() {
     if (e.key === 'Enter') {
       try {
         const userId = userIdInput.trim();
-        setUserTitle(`Рекомендации для пользователя ${userId}`);
+        const cleanUserId = DOMPurify.sanitize(userId);
+        setUserTitle(`Рекомендации для пользователя ${cleanUserId}`);
 
         const mockMovies = Array(50).fill().map((_, index) => ({
           id: index + 100,
@@ -270,7 +271,7 @@ export default function Main() {
         
         setMovies(mockMovies);
         logEvent('user_performed', {
-          value: userId,
+          value: cleanUserId,
           resultsCount: mockMovies.length,
         });
         setSearchInputDisabled(false);
@@ -283,9 +284,10 @@ export default function Main() {
           document.body.style.overflow = 'auto';
         }, 100);
       } catch (error) {
+        const cleanError = DOMPurify.sanitize(error.message);
         logEvent('user_id_search_error', {
-          error: error.message,
-          userId: userIdInput
+          error: cleanError,
+          userId: cleanUserId
         });
         console.error('Error fetching recommendations:', error);
       }
